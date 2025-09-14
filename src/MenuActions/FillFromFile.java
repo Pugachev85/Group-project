@@ -1,6 +1,6 @@
 package MenuActions;
 
-public class FillIntoFile implements MenuStrategy {
+public class FillFromFile implements MenuStrategy {
     @Override
     public void execute() {
         // код парсера

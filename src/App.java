@@ -8,7 +8,7 @@ public class App {
         Menu sortSubMenu = new Menu("Сортировка коллекции\n");
         Menu mainMenu = new Menu("Главное меню\n");
 
-        fillSubMenu.addItem("1", "Заполнить коллекцию из файла", new FillIntoFile());
+        fillSubMenu.addItem("1", "Заполнить коллекцию из файла", new FillFromFile());
         fillSubMenu.addItem("2", "Заполнить коллекцию случайными данными", new FillRandom());
         fillSubMenu.addItem("3", "Ввести вручную", new FillByUser());
         fillSubMenu.addSubMenuItem("4", "Назад", mainMenu);
