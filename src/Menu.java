@@ -1,32 +1,39 @@
-public class Menu {
-    private final String[] items;
+import MenuActions.MenuStrategy;
 
-    private Menu(String[] items) {
-        this.items = items;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+class Menu {
+    private String title;
+    private Map<Integer, MenuItem> items = new HashMap<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    public Menu(String title) {
+        this.title = title;
     }
 
-    public void display() {
-        System.out.println("\nВыберите действие:");
-        for (int i = 0; i < items.length; i++) {
-            System.out.println((i + 1) + ". " + items[i]);
-        }
+    public void addItem(int key, String description, MenuStrategy strategy) {
+        items.put(key, new MenuItem(description, strategy));
     }
 
-    public static class Builder {
-        private String[] items = new String[0];
+    public void addSubMenuItem(int key, String description, Menu subMenu) {
+        items.put(key, new MenuItem(description, subMenu::show));
+    }
 
-        public Builder() {}
-
-        public Builder addItem(String item) {
-            String[] newItems = new String[items.length + 1];
-            System.arraycopy(items, 0, newItems, 0, items.length);
-            newItems[items.length] = item;
-            items = newItems;
-            return this;
-        }
-
-        public Menu build() {
-            return new Menu(items);
+    public void show() {
+        while (true) {
+            System.out.println("\n" + title);
+            for (Map.Entry<Integer, MenuItem> entry : items.entrySet()) {
+                System.out.println(entry.getKey() + ". " + entry.getValue().getDescription());
+            }
+            System.out.print("Выберите пункт: ");
+            int choice = scanner.nextInt();
+            if (items.containsKey(choice)) {
+                items.get(choice).execute();
+            } else {
+                System.out.println("Неверный выбор. Попробуйте снова.");
+            }
         }
     }
 }

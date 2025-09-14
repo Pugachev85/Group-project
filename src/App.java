@@ -1,78 +1,31 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import MenuActions.*;
 
 public class App {
-    private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static void main(String[] args) {
-        System.out.println("\nДобро пожаловать в наше приложение!");
-        Menu menu = new Menu.Builder()
-                .addItem("Заполнние исходного массива")
-                .addItem("Отсортировать массив")
-                .addItem("Поиск")
-                .addItem("Выход из программы").build();
 
-        boolean isBreak = false;
+        Menu fillSubMenu = new Menu("Заполнение коллекции");
+        Menu sortSubMenu = new Menu("Сортировка коллекции");
+        Menu mainMenu = new Menu("Главное меню");
 
-        while (!isBreak) {
-            menu.display();
-            switch (getUserChoice()) {
-                case "1" -> showSubMenuFill();
-                case "2" -> showSubMenuSort();
-                case "3" -> searchPersons();
-                case "4" -> isBreak = true;
-                default -> System.out.println("\nНеверный выбор. Попробуйте еще раз:");
-            }
+        fillSubMenu.addItem(1, "Заполнить коллекцию из файла", new FillIntoFile());
+        fillSubMenu.addItem(2, "Заполнить коллекцию случайными данными", new FillRandom());
+        fillSubMenu.addItem(3, "Ввести вручную", new FillByUser());
+        fillSubMenu.addSubMenuItem(4, "Назад", mainMenu);
 
-        }
-    }
 
-    public static String getUserChoice() {
-        try {
-            return reader.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+        sortSubMenu.addItem(1, "Сортировать по имени", new SortStrategy());
+        sortSubMenu.addItem(2, "Сортировать по фамилии", new SortStrategy());
+        sortSubMenu.addItem(3, "Сортировать по году рождния", new SortStrategy());
+        sortSubMenu.addSubMenuItem(4, "Назад", mainMenu);
 
-    private static void showSubMenuFill() {
-        Menu subMenu = new Menu.Builder()
-                .addItem("Заполнить коллекцию из файла")
-                .addItem("Заполнить коллекцию случайными данными")
-                .addItem("Ввести вручную")
-                .addItem("Вернуться").build();
 
-        while (true) {
-            subMenu.display();
-            switch (getUserChoice()) {
-                case "1" -> System.out.println("1.1.");
-                case "4" -> {
-                    return;
-                }
-                default -> System.out.println("Неверный выбор. Попробуйте еще раз:");
-            }
-        }
-    }
+        mainMenu.addSubMenuItem(1, "Заполнние исходной коллекции", fillSubMenu);
+        mainMenu.addSubMenuItem(2, "Отсортировать коллекцию", sortSubMenu);
+        mainMenu.addItem(3, "Поиск", new SearchStrategy());
+        mainMenu.addItem(4, "Выход", new ExitStrategy());
 
-    private static void searchPersons() {}
-
-    private static void showSubMenuSort() {
-        Menu subMenu = new Menu.Builder()
-                .addItem("Сортировать по имени")
-                .addItem("Сортировать по фамилии")
-                .addItem("Сортировать по году рождния")
-                .addItem("Вернуться").build();
-
-        while (true) {
-            subMenu.display();
-            switch (getUserChoice()) {
-                case "1" -> System.out.println("1.1.");
-                case "4" -> {
-                    return;
-                }
-                default -> System.out.println("Неверный выбор. Попробуйте еще раз:");
-            }
-        }
+        // Запуск главного меню
+        mainMenu.show();
     }
 }
