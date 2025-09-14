@@ -5,30 +5,30 @@ import java.util.Map;
 import java.util.Scanner;
 
 class Menu {
-    private String title;
-    private Map<Integer, MenuItem> items = new HashMap<>();
-    private Scanner scanner = new Scanner(System.in);
+    private final String title;
+    private final Map<String, MenuItem> items = new HashMap<>();
+    private final Scanner scanner = new Scanner(System.in);
 
     public Menu(String title) {
         this.title = title;
     }
 
-    public void addItem(int key, String description, MenuStrategy strategy) {
+    public void addItem(String key, String description, MenuStrategy strategy) {
         items.put(key, new MenuItem(description, strategy));
     }
 
-    public void addSubMenuItem(int key, String description, Menu subMenu) {
+    public void addSubMenuItem(String key, String description, Menu subMenu) {
         items.put(key, new MenuItem(description, subMenu::show));
     }
 
     public void show() {
         while (true) {
             System.out.println("\n" + title);
-            for (Map.Entry<Integer, MenuItem> entry : items.entrySet()) {
+            for (Map.Entry<String, MenuItem> entry : items.entrySet()) {
                 System.out.println(entry.getKey() + ". " + entry.getValue().getDescription());
             }
             System.out.print("Выберите пункт: ");
-            int choice = scanner.nextInt();
+            String choice = scanner.next();
             if (items.containsKey(choice)) {
                 items.get(choice).execute();
             } else {
