@@ -1,5 +1,6 @@
 import MenuActions.MenuStrategy;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -31,9 +32,16 @@ class Menu {
             String choice = scanner.next();
             if (items.containsKey(choice)) {
                 items.get(choice).execute();
+                System.out.println("Нажмите Enter для продолжения");
+                try {
+                    System.in.read();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 System.out.println("Неверный выбор. Попробуйте снова.");
             }
+
         }
     }
 }
