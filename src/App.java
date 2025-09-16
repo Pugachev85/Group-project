@@ -21,7 +21,8 @@ public class App {
         mainMenu.addSubMenuItem("1", "Заполнние исходной коллекции", fillSubMenu);
         mainMenu.addSubMenuItem("2", "Отсортировать коллекцию", sortSubMenu);
         mainMenu.addItem("3", "Поиск", new SearchStrategy());
-        mainMenu.addItem("4", "Выход", new ExitStrategy());
+        mainMenu.addItem("4", "Вывести коллекцию на экран", new PrintCollectionStrategy());
+        mainMenu.addItem("5", "Выход", new ExitStrategy());
 
         // Запуск главного меню
         mainMenu.show();
