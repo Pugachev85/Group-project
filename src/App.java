@@ -13,9 +13,9 @@ public class App {
         fillSubMenu.addItem("3", "Ввести вручную", new FillByUser());
         fillSubMenu.addSubMenuItem("4", "Назад", mainMenu);
 
-        sortSubMenu.addItem("1", "Сортировать по имени", new SortStrategy());
-        sortSubMenu.addItem("2", "Сортировать по фамилии", new SortStrategy());
-        sortSubMenu.addItem("3", "Сортировать по году рождния", new SortStrategy());
+        sortSubMenu.addItem("1", "Сортировать по имени", new SortStrategy(Field.NAME));
+        sortSubMenu.addItem("2", "Сортировать по фамилии", new SortStrategy(Field.SURNAME));
+        sortSubMenu.addItem("3", "Сортировать по году рождния", new SortStrategy(Field.BIRTHYEAR));
         sortSubMenu.addSubMenuItem("4", "Назад", mainMenu);
 
         mainMenu.addSubMenuItem("1", "Заполнние исходной коллекции", fillSubMenu);
