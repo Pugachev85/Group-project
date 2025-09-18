@@ -13,7 +13,7 @@ public class FillFromFile implements MenuStrategy {
     public void execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите путь к файлу (.txt или .csv): ");
-        //  ./resources/demo.txt
+        //  resources/demo.txt
         String path = scanner.nextLine();
         try {
             List<Person> persons = PersonParser.parse(path);
