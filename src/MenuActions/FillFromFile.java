@@ -16,7 +16,7 @@ public class FillFromFile implements MenuStrategy {
         //  resources/demo.txt
         String path = scanner.nextLine();
         try {
-            List<Person> persons = PersonParser.parse(path);
+            List<Person> persons = PersonParser.parseFile(path);
             System.out.println("Файл успешно загружен! Найдено " + persons.size() + " записей.");
             persons.stream()
                     .map(Person::toString)
