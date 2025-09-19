@@ -23,9 +23,15 @@ public class SortStrategy implements MenuStrategy {
         Comparator<Person> comparator;
 
         switch (sortField) {
-            case NAME -> comparator = Comparator.comparing(Person::getName);
-            case SURNAME -> comparator = Comparator.comparing(Person::getSurname);
-            case BIRTHYEAR -> comparator = Comparator.comparing(Person::getBirthYear);
+            case NAME -> comparator = Comparator.comparing(Person::getName)
+                    .thenComparing(Person::getSurname)
+                    .thenComparing(Person::getBirthYear);
+            case SURNAME -> comparator = Comparator.comparing(Person::getSurname)
+                    .thenComparing(Person::getName)
+                    .thenComparing(Person::getBirthYear);
+            case BIRTHYEAR -> comparator = Comparator.comparing(Person::getBirthYear)
+                    .thenComparing(Person::getName)
+                    .thenComparing(Person::getSurname);
             default -> comparator = Comparator.comparing(Person::getBirthYear);
         }
 
