@@ -15,7 +15,7 @@ public class QuickSortEven<T> implements SortAlgorithm<T> {
     }
 
     @Override
-    public void sort(List<T> list, Comparator<T> comporator) {
+    public void sort(List<T> list, Comparator<T> comparator) {
         List<T> evenElements = new ArrayList<>();
         List<Integer> indexes = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class QuickSortEven<T> implements SortAlgorithm<T> {
             }
         }
 
-        quickSort.sort(evenElements, comporator);
+        quickSort.sort(evenElements, comparator);
 
         for (int i = 0; i < indexes.size(); i++) {
             list.set(indexes.get(i), evenElements.get(i));
