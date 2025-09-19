@@ -12,9 +12,11 @@ public class FileSaver {
     public static <T> void saveCollection(Collection<T> collection) {
         if (UserDialog.askUser("Хотите записать результат в файл (д/н): ")) {
             String filePath = UserDialog.askFilePath("Введите путь к файлу (.txt): ");
+            PersonExporter exporter = new CsvPersonExporter();
+
             try (FileWriter writer = new FileWriter(filePath, true)) {
                 for (Person person : DataBase.personCollection) {
-                    writer.write(person.toString() + "\n");
+                    writer.write(exporter.export(person) + "\n");
                 }
                 writer.write("\n");
                 System.out.println("Результат сохранён в файл: " + filePath);

@@ -21,13 +21,16 @@ public class UserDialog {
         }
     }
 
-    public static String askFilePath(String prompt) {
+    public static String askInput(String prompt) {
         System.out.print(prompt + ": ");
         return scanner.nextLine().trim();
     }
 
+    public static String askFilePath(String prompt) {
+        return askInput(prompt);
+    }
+
     public static String askLine(String prompt) {
-        System.out.print(prompt + ": ");
-        return scanner.nextLine().trim();
+        return askInput(prompt);
     }
 }
