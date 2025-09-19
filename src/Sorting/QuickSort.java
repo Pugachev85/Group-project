@@ -17,9 +17,9 @@ public class QuickSort<T> implements SortAlgorithm<T> {
     }
 
     @Override
-    public void sort(List<T> list, Comparator<T> comporator) {
+    public void sort(List<T> list, Comparator<T> comparator) {
         try {
-            new QuickSortTask(list, 0, list.size()-1, comporator).call();
+            new QuickSortTask(list, 0, list.size()-1, comparator).call();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -58,12 +58,12 @@ public class QuickSort<T> implements SortAlgorithm<T> {
         }
     }
 
-    private int partition(List<T> list, int low, int high, Comparator<T> comporator) {
+    private int partition(List<T> list, int low, int high, Comparator<T> comparator) {
         T pivot = list.get(high);
         int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (comporator.compare(list.get(j), pivot) <= 0) {
+            if (comparator.compare(list.get(j), pivot) <= 0) {
                 i++;
 
                 T temp = list.get(i);

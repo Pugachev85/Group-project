@@ -3,10 +3,9 @@ package MenuActions;
 import Entity.Person;
 import Sorting.QuickSort;
 import Sorting.SortAlgorithm;
-import Utils.FileSaver;
 import java.util.Comparator;
 
-public class SortStrategy implements MenuStrategy {
+public class SortStrategy extends AbstractSortStrategy {
     private final Field sortField;
 
     public SortStrategy(Field sortField) {
@@ -14,27 +13,17 @@ public class SortStrategy implements MenuStrategy {
     }
 
     @Override
-    public void execute() {
-        if (DataBase.personCollection.isEmpty()) {
-            System.out.println("Коллекция пока пуста. Сначала заполните ее!");
-            return;
-        }
+    public Comparator<Person> comparator() {
+        return switch (sortField) {
+            case NAME -> Comparator.comparing(Person::getName);
+            case SURNAME -> Comparator.comparing(Person::getSurname);
+            case BIRTHYEAR -> Comparator.comparing(Person::getBirthYear);
+            default -> Comparator.comparing(Person::getBirthYear);
+        };
+    }
 
-        Comparator<Person> comparator;
-
-        switch (sortField) {
-            case NAME -> comparator = Comparator.comparing(Person::getName);
-            case SURNAME -> comparator = Comparator.comparing(Person::getSurname);
-            case BIRTHYEAR -> comparator = Comparator.comparing(Person::getBirthYear);
-            default -> comparator = Comparator.comparing(Person::getBirthYear);
-        }
-
-        SortAlgorithm<Person> sorter = new QuickSort<>(2);
-        sorter.sort(DataBase.personCollection, comparator);
-
-        System.out.println("Коллекция отсортирована! Результат:");
-        DataBase.personCollection.forEach(System.out::println);
-
-        FileSaver.saveCollection(DataBase.personCollection);
+    @Override
+    public SortAlgorithm<Person> sorter() {
+        return new QuickSort<>(2);
     }
 }
