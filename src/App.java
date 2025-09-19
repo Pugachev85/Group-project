@@ -18,7 +18,7 @@ public class App {
         sortSubMenu.addItem("3", "Сортировать по году рождния", new SortStrategy(Field.BIRTHYEAR));
         sortSubMenu.addSubMenuItem("4", "Назад", mainMenu);
 
-        mainMenu.addSubMenuItem("1", "Заполнние исходной коллекции", fillSubMenu);
+        mainMenu.addSubMenuItem("1", "Заполнение исходной коллекции", fillSubMenu);
         mainMenu.addSubMenuItem("2", "Отсортировать коллекцию", sortSubMenu);
         mainMenu.addItem("3", "Поиск", new SearchStrategy());
         mainMenu.addItem("4", "Вывести коллекцию на экран", new PrintCollectionStrategy());
