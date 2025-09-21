@@ -9,6 +9,10 @@ public class BinarySearch {
     public static <T> List<Integer> binarySearchAll(List<T> list, T key, Comparator<T> comparator) {
         List<Integer> results = new ArrayList<>();
         
+        if (list.isEmpty()) {
+            return results;
+        }
+        
         int firstIndex = findFirstIndex(list, key, comparator);
         if (firstIndex == -1) {
             return results;
@@ -18,12 +22,6 @@ public class BinarySearch {
         while (current < list.size() && comparator.compare(list.get(current), key) == 0) {
             results.add(current);
             current++;
-        }
-        
-        current = firstIndex - 1;
-        while (current >= 0 && comparator.compare(list.get(current), key) == 0) {
-            results.add(current);
-            current--;
         }
         
         return results;
