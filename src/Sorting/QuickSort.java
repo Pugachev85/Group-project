@@ -7,6 +7,8 @@ import java.util.concurrent.*;
 public class QuickSort<T> implements SortAlgorithm<T> {
 
     private final ExecutorService executor;
+    private static final int THRESHOLD = 1000;
+    private static final int MAX_DEPTH = 20;
 
     public QuickSort() {
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -19,7 +21,7 @@ public class QuickSort<T> implements SortAlgorithm<T> {
     @Override
     public void sort(List<T> list, Comparator<T> comparator) {
         try {
-            new QuickSortTask(list, 0, list.size()-1, comparator).call();
+            executor.submit(new QuickSortTask(list, 0, list.size()-1, comparator, 0)).get();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -29,32 +31,44 @@ public class QuickSort<T> implements SortAlgorithm<T> {
 
     private class QuickSortTask implements Callable<Void> {
         private final List<T> list;
-        private final int low;
-        private final int high;
+        private final int low, high, depth;
         private final Comparator<T> comparator;
 
-        QuickSortTask(List<T> list, int low, int high, Comparator<T> comparator) {
+        QuickSortTask(List<T> list, int low, int high, Comparator<T> comparator, int depth) {
             this.list = list;
             this.low = low;
             this.high = high;
             this.comparator = comparator;
+            this.depth = depth;
         }
 
         @Override
         public Void call() throws Exception {
             if (low < high) {
+                if (depth >= MAX_DEPTH || high - low < THRESHOLD) {
+                    sequentialQuickSort(list, low, high, comparator);
+                    return null;
+                }
+
                 int pivotIndex = partition(list, low, high, comparator);
 
-                new QuickSortTask(list, low, pivotIndex - 1, comparator).call();
-
-                if (pivotIndex +1 < high) {
-                    QuickSortTask rightTask = new QuickSortTask(list, pivotIndex + 1, high, comparator);
-                    Future<Void> rightFuture = executor.submit(rightTask);
-                    rightFuture.get();
-
+                if (pivotIndex - low > high - pivotIndex) {
+                    sequentialQuickSort(list, low, pivotIndex - 1, comparator);
+                    executor.submit(new QuickSortTask(list, pivotIndex + 1, high, comparator, depth+1)).get();
+                } else {
+                    executor.submit(new QuickSortTask(list, low, pivotIndex - 1, comparator, depth+1)).get();
+                    sequentialQuickSort(list, pivotIndex + 1, high, comparator);
                 }
+
             }
             return null;
+        }
+    }
+    private void sequentialQuickSort(List<T> list, int low, int high, Comparator<T> comparator) {
+        if (low < high) {
+            int pivotIndex = partition(list, low, high, comparator);
+            sequentialQuickSort(list, low, pivotIndex - 1, comparator);
+            sequentialQuickSort(list, pivotIndex + 1, high, comparator);
         }
     }
 
