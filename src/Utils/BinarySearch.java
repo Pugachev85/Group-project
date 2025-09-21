@@ -1,13 +1,38 @@
 package Utils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class BinarySearch {
     
-    public static <T> int binarySearch(List<T> list, T key, Comparator<T> comparator) {
+    public static <T> List<Integer> binarySearchAll(List<T> list, T key, Comparator<T> comparator) {
+        List<Integer> results = new ArrayList<>();
+        
+        int firstIndex = findFirstIndex(list, key, comparator);
+        if (firstIndex == -1) {
+            return results;
+        }
+        
+        int current = firstIndex;
+        while (current < list.size() && comparator.compare(list.get(current), key) == 0) {
+            results.add(current);
+            current++;
+        }
+        
+        current = firstIndex - 1;
+        while (current >= 0 && comparator.compare(list.get(current), key) == 0) {
+            results.add(current);
+            current--;
+        }
+        
+        return results;
+    }
+    
+    private static <T> int findFirstIndex(List<T> list, T key, Comparator<T> comparator) {
         int low = 0;
         int high = list.size() - 1;
+        int result = -1;
         
         while (low <= high) {
             int mid = (low + high) >>> 1;
@@ -19,9 +44,10 @@ public class BinarySearch {
             } else if (cmp > 0) {
                 high = mid - 1;
             } else {
-                return mid; 
+                result = mid;
+                high = mid - 1;
             }
         }
-        return -1; 
+        return result;
     }
 }
