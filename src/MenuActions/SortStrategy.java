@@ -35,7 +35,7 @@ public class SortStrategy implements MenuStrategy {
             default -> comparator = Comparator.comparing(Person::getBirthYear);
         }
 
-        SortAlgorithm<Person> sorter = new QuickSort<>(2);
+        SortAlgorithm<Person> sorter = new QuickSort<>();
         sorter.sort(DataBase.personCollection, comparator);
 
         System.out.println("Коллекция отсортирована! Результат:");

@@ -15,6 +15,6 @@ public class EvenSortStrategy extends AbstractSortStrategy{
 
     @Override
     public SortAlgorithm<Person> sorter() {
-        return new QuickSortEven<>(2);
+        return new QuickSortEven<>();
     }
 }
