@@ -15,7 +15,8 @@ public class App {
         sortSubMenu.addItem("1", "Сортировать по имени", new SortStrategy(Field.NAME));
         sortSubMenu.addItem("2", "Сортировать по фамилии", new SortStrategy(Field.SURNAME));
         sortSubMenu.addItem("3", "Сортировать по году рождния", new SortStrategy(Field.BIRTHYEAR));
-        sortSubMenu.addSubMenuItem("4", "Назад", mainMenu);
+        sortSubMenu.addItem("4", "Доп. Задание №1", new EvenSortStrategy());
+        sortSubMenu.addSubMenuItem("5", "Назад", mainMenu);
 
         searchSubMenu.addItem("1", "Поиск по имени", new SearchByNameStrategy());
         searchSubMenu.addItem("2", "Поиск по фамилии", new SearchBySurnameStrategy());
