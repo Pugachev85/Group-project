@@ -10,6 +10,10 @@ public class QuickSortEven<T> implements SortAlgorithm<T> {
 
     private final QuickSort<T> quickSort;
 
+    public QuickSortEven() {
+        this.quickSort = new QuickSort<>();
+    }
+
     public QuickSortEven(int numOfThreads) {
         this.quickSort = new QuickSort<>(numOfThreads);
     }
