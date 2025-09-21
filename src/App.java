@@ -21,7 +21,8 @@ public class App {
         searchSubMenu.addItem("1", "Поиск по имени", new SearchByNameStrategy());
         searchSubMenu.addItem("2", "Поиск по фамилии", new SearchBySurnameStrategy());
         searchSubMenu.addItem("3", "Поиск по году рождения", new SearchByBirthYearStrategy());
-        searchSubMenu.addSubMenuItem("4", "Назад", mainMenu);
+        searchSubMenu.addItem("4", "Доп. Задание №4", new CountOfEntriesStrategy());
+        searchSubMenu.addSubMenuItem("5", "Назад", mainMenu);
       
         mainMenu.addSubMenuItem("1", "Заполнение исходной коллекции", fillSubMenu);
         mainMenu.addSubMenuItem("2", "Отсортировать коллекцию", sortSubMenu);
